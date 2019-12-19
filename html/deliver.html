@@ -41,7 +41,7 @@
                 
                 <div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "e.g F12345">
 					<span class="label-input100">Insert Farm ID</span>
-					<input class="input100" type="text" id="farmIdDelivery" placeholder="insert Farm ID" name="farmIdDelivery">
+					<input class="input100" id="farmIdDelivery" placeholder="insert Farm ID" name="farmIdDelivery" onchange="farmIDcleaner()">
 				</div>
 
 					<button class="contact100-form-btn" type="submit" name="submitDeliver" id="submitButton">
@@ -56,6 +56,19 @@
 				<div class="container-contact100-form-btn">
 						</div>
 	</div>
+
+
+	<script type="text/javascript">
+
+		function farmIDcleaner(){
+			var input = document.getElementById("farmIdDelivery");
+
+			input.value = input.value.toUpperCase().trim();
+
+
+		}
+		
+	</script>
 
 
 

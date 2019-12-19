@@ -30,7 +30,7 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
      
      $collection->insertOne($document);
 
-     $message = "Farm ID: ".$farmId." \n \n Please write down farm ID";
+     $message = "Farm registered!<br> <br>Farm ID: ".$farmId." <br> <br> <strong>dance</strong>";
      
 
     echo $message;
@@ -39,6 +39,8 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
 elseif(isset($_POST['submitDeliver'])){
 
   $farmId = ($_POST['farmIdDelivery']);
+
+  echo "Yes! <br> <strong>dance</strong>";
 
   $db = $client->farm;
   $collection = $db->$farmId;
@@ -57,7 +59,7 @@ elseif(isset($_POST['submitDeliver'])){
      $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId;
 
      //go to site
-     header("Location: deliverInfo.html?".$parameters);
+     //header("Location: deliverInfo.html?".$parameters);
      exit;
 }
 
