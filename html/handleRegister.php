@@ -30,7 +30,7 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
 
      $message = "Farm ID: ".$farmId.". PLEASE WRTIE DOWN THIS ID";
 
-     $url = "deliver.html";
+     $url = "deliver.html?id=".$farmId;
 
       echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";
 }
