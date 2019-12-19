@@ -30,15 +30,18 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
      
      $collection->insertOne($document);
 
-     $message = "Farm registered!<br> <br>Farm ID: ".$farmId." <br> <br> <strong>dance</strong>";
-     
+     $message = "Farm ID: ".$farmId.". PLEASE WRTIE DOWN THIS ID";
 
-    echo $message;
+     $url = "deliver.html";
+
+      echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";
 }
 
 elseif(isset($_POST['submitDeliver'])){
 
   $farmId = ($_POST['farmIdDelivery']);
+
+  
 
   $db = $client->farm;
   $collection = $db->$farmId;
@@ -56,8 +59,12 @@ elseif(isset($_POST['submitDeliver'])){
 
      $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId;
 
+     $url = "deliverInfo.html?".$parameters;
+
+
      //go to site
-     header("Location: deliverInfo.html?".$parameters);
+
+     header("Location: ".$url);
      exit;
 }
 
