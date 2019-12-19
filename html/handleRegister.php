@@ -40,8 +40,6 @@ elseif(isset($_POST['submitDeliver'])){
 
   $farmId = ($_POST['farmIdDelivery']);
 
-  echo "Yes! <br> <strong>dance</strong>";
-
   $db = $client->farm;
   $collection = $db->$farmId;
 
@@ -59,7 +57,7 @@ elseif(isset($_POST['submitDeliver'])){
      $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId;
 
      //go to site
-     //header("Location: deliverInfo.html?".$parameters);
+     header("Location: deliverInfo.html?".$parameters);
      exit;
 }
 
