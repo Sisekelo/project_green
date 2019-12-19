@@ -42,22 +42,27 @@
 
 			<div class="wrap-input100 rs1-wrap-input100">
                     <span class="label-input100">Farm name:</span>
-                    <span class="input100" id="farmNameDelivery">KaDlaiodjmini</span> 
+                    <span class="input100" id="farmNameDelivery"></span> 
                 </div>
                 
                 <div class="wrap-input100 rs1-wrap-input100">
                     <span class="label-input100">Farmer Phone:</span>
-                    <span class="input100" id="farmPhoneDelivery">+26876068480</span> 
+                    <span class="input100" id="farmPhoneDelivery"></span> 
                 </div>
                 
                 <div class="wrap-input100 rs1-wrap-input100">
                     <span class="label-input100">Farm Region:</span>
-                    <span class="input100" id="farmRegionDelivery">Hhohho</span> 
+                    <span class="input100" id="farmRegionDelivery"></span> 
                 </div>
                 
                 <div class="wrap-input100 rs1-wrap-input100">
                     <span class="label-input100">Farm Notes:</span>
-                    <span class="input100" id="farmNotesDelivery">This farm is small</span> 
+                    <span class="input100" id="farmNotesDelivery"></span> 
+                </div>
+
+                <div class="wrap-input100 wrap-input100">
+                    <span class="label-input100">Past delivery notes:</span>
+                    <span class="input100" id="pastFarmDeliveries">Some things were delivered before.</span> 
                 </div>
 
 			<form class="contact100-form validate-form" id="farmDeliveryInfo" name="farmDeliveryInfo" action="handleRegister.php" method="POST">
@@ -71,6 +76,7 @@
 				</div>
 
 				<input type="hidden" name="farmIdName" id="farmIdInfo" value="joe">
+				<input type="hidden" name="pastFarmDeliveriesInfo" id="pastFarmDeliveriesInfo" value="joe">
 
 					<button class="contact100-form-btn" type="submit" name="submitDeliverInfo" id="submitButtonInfo">
 						<span>
@@ -92,8 +98,11 @@
 		var number = url.searchParams.get("farmerNumber");
 		var region = url.searchParams.get("farmRegion");
 		var notes = url.searchParams.get("farmNotes");
+		var farmerDeliveries = url.searchParams.get("farmDeliveries");
 
 		document.getElementById("farmIdInfo").value = id;
+
+		document.getElementById("pastFarmDeliveriesInfo").value = farmerDeliveries;
 
 
 		document.getElementById("title").innerHTML
@@ -110,6 +119,9 @@
 
 		document.getElementById("farmNotesDelivery").innerHTML
 		= notes;
+
+		document.getElementById("pastFarmDeliveries").innerHTML
+		= farmerDeliveries;
 		
 
 	</script>

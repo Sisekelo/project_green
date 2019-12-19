@@ -12,8 +12,6 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
     $farmerNumber = ($_POST['farmerNumber']);
     $farmRegion = ($_POST['farmRegion']);
     $farmNotes = ($_POST['farmNotes']);
-      
-    
 
     $db = $client->farm;
     $collection = $db->$farmId;
@@ -25,7 +23,7 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
           "farmerNumber" => $farmerNumber,
           "farmRegion" => $farmRegion,
           "farmNotes" => $farmNotes,
-          "farmDeliveries" => "None"
+          "farmDeliveries" => ""
        );
      
      $collection->insertOne($document);
@@ -41,8 +39,6 @@ elseif(isset($_POST['submitDeliver'])){
 
   $farmId = ($_POST['farmIdDelivery']);
 
-  
-
   $db = $client->farm;
   $collection = $db->$farmId;
 
@@ -54,10 +50,11 @@ elseif(isset($_POST['submitDeliver'])){
       $farmerNumber = $document["farmerNumber"];
       $farmRegion = $document["farmRegion"];
       $farmNotes = $document["farmNotes"];
+      $farmerDeliveries = $document['farmDeliveries'];
 
      };
 
-     $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId;
+     $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId."&farmDeliveries=".$farmerDeliveries;
 
      $url = "deliverInfo.html?".$parameters;
 
@@ -76,11 +73,18 @@ elseif(isset($_POST['submitDeliverInfo'])){
    $deliveriesInfoId
    = ($_POST['farmIdName']);
 
+   $pastDeliveryInfo
+   = ($_POST['pastFarmDeliveriesInfo']);
+
+   $combinedDeliveries = $pastDeliveryInfo."<br> <br>".$deliveriesInfo;
+
   $db = $client->farm;
   $collection = $db->$deliveriesInfoId;
 
-  $collection->updateOne(array("farmDeliveries"=>"None"), 
-      array('$set'=>array("farmDeliveries"=>$deliveriesInfo)));
+  
+
+  $collection->updateOne(array("farmDeliveries"=>$pastDeliveryInfo), 
+      array('$set'=>array("farmDeliveries"=>$combinedDeliveries)));
 
      //go to site
      header("Location: deliver.html");
