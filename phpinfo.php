@@ -12,16 +12,20 @@ require 'vendor/autoload.php';
 
 $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
 
-$item = "F6269";
+$item = "F5741";
 
 $db = $client->farm;
 $collection = $db->$item;
 
+// now update the document
+   $dump = $collection->updateOne(array("farmDeliveries"=>"None"), 
+      array('$set'=>array("farmDeliveries"=>"Delivered")));
+   var_dump($dump);
+
 $cursor = $collection->find();
 
 foreach ($cursor as $document) {
-      echo $document["farmId"] . "\n";
-      echo $document["farmRegion"] . "\n";
+      echo $document["farmDeliveries"] . "\n";
    };
 	
 ?>

@@ -2,6 +2,8 @@
 
 require '../vendor/autoload.php';
 
+$client = new MongoDB\Client("mongodb://127.0.0.1:27017");
+
 
  if(isset($_POST['submit'])){
       
@@ -11,7 +13,7 @@ require '../vendor/autoload.php';
     $farmRegion = ($_POST['farmRegion']);
     $farmNotes = ($_POST['farmNotes']);
       
-    $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
+    
 
     $db = $client->farm;
     $collection = $db->$farmId;
@@ -22,7 +24,8 @@ require '../vendor/autoload.php';
           "farmName" => $farmName, 
           "farmerNumber" => $farmerNumber,
           "farmRegion" => $farmRegion,
-          "farmNotes" => $farmNotes
+          "farmNotes" => $farmNotes,
+          "farmDeliveries" => "None"
        );
      
      $collection->insertOne($document);
@@ -31,11 +34,50 @@ require '../vendor/autoload.php';
      
 
     echo $message;
+}
 
-elseif($_GET['submit'])){
+elseif(isset($_POST['submitDeliver'])){
 
-	echo $_GET['farmIdDelivery'];
+  $farmId = ($_POST['farmIdDelivery']);
 
+  $db = $client->farm;
+  $collection = $db->$farmId;
+
+  $cursor = $collection->find();
+
+  foreach ($cursor as $document) {
+
+      $farmName = $document["farmName"];
+      $farmerNumber = $document["farmerNumber"];
+      $farmRegion = $document["farmRegion"];
+      $farmNotes = $document["farmNotes"];
+
+     };
+
+     $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId;
+
+     //go to site
+     header("Location: deliverInfo.html?".$parameters);
+     exit;
+}
+
+elseif(isset($_POST['submitDeliverInfo'])){
+
+  $deliveriesInfo
+   = ($_POST['deliveriesInfo']);
+
+   $deliveriesInfoId
+   = ($_POST['farmIdName']);
+
+  $db = $client->farm;
+  $collection = $db->$deliveriesInfoId;
+
+  $collection->updateOne(array("farmDeliveries"=>"None"), 
+      array('$set'=>array("farmDeliveries"=>$deliveriesInfo)));
+
+     //go to site
+     header("Location: deliver.html");
+     exit;
 }
      
 else{

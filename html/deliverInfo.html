@@ -33,18 +33,46 @@
 
 
 	<div class="container-contact100">
-		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" id="farmDelivery" name="farmDelivery" action="handleRegister.php" method="POST">
+		<div class="wrap-contact100 contact100-form">
+
+			<span class="contact100-form-title" id="title">
+					Information farm: 
+				</span>
+
+
+			<div class="wrap-input100 rs1-wrap-input100">
+                    <span class="label-input100">Farm name:</span>
+                    <span class="input100" id="farmNameDelivery">KaDlaiodjmini</span> 
+                </div>
+                
+                <div class="wrap-input100 rs1-wrap-input100">
+                    <span class="label-input100">Farmer Phone:</span>
+                    <span class="input100" id="farmPhoneDelivery">+26876068480</span> 
+                </div>
+                
+                <div class="wrap-input100 rs1-wrap-input100">
+                    <span class="label-input100">Farm Region:</span>
+                    <span class="input100" id="farmRegionDelivery">Hhohho</span> 
+                </div>
+                
+                <div class="wrap-input100 rs1-wrap-input100">
+                    <span class="label-input100">Farm Notes:</span>
+                    <span class="input100" id="farmNotesDelivery">This farm is small</span> 
+                </div>
+
+			<form class="contact100-form validate-form" id="farmDeliveryInfo" name="farmDeliveryInfo" action="handleRegister.php" method="POST">
 				<span class="contact100-form-title">
-					Deliver good to farm
+					Insert Info about deliveries
 				</span>
                 
-                <div class="wrap-input100 validate-input bg1 wrap-input100" data-validate = "e.g F12345">
-					<span class="label-input100">Insert Farm ID</span>
-					<input class="input100" type="text" id="farmIdDelivery" placeholder="insert Farm ID" name="farmIdDelivery">
+                <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type what was delivered">
+					<span class="label-input100">Deliveries</span>
+					<textarea class="input100" name="deliveriesInfo" placeholder="Insert what was delivered"></textarea>
 				</div>
 
-					<button class="contact100-form-btn" type="submit" name="submitDeliver" id="submitButton">
+				<input type="hidden" name="farmIdName" id="farmIdInfo" value="joe">
+
+					<button class="contact100-form-btn" type="submit" name="submitDeliverInfo" id="submitButtonInfo">
 						<span>
 							Submit
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
@@ -52,11 +80,42 @@
 					</button>
 				</div>
 			</form>
-
-				<div class="container-contact100-form-btn">
-						</div>
 	</div>
 
+
+	<script type="text/javascript">
+
+		var url = new URL(window.location.href);
+
+		var id = url.searchParams.get("farmId");
+		var name = url.searchParams.get("name");
+		var number = url.searchParams.get("farmerNumber");
+		var region = url.searchParams.get("farmRegion");
+		var notes = url.searchParams.get("farmNotes");
+
+		document.getElementById("farmIdInfo").value = id;
+
+
+		document.getElementById("title").innerHTML
+		+= id;
+
+		document.getElementById("farmNameDelivery").innerHTML
+		= name;
+
+		document.getElementById("farmPhoneDelivery").innerHTML
+		= number;
+
+		document.getElementById("farmRegionDelivery").innerHTML
+		= region;
+
+		document.getElementById("farmNotesDelivery").innerHTML
+		= notes;
+		
+
+	</script>
+
+
+;
 
 
 <!--===============================================================================================-->
