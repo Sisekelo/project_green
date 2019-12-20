@@ -76,6 +76,9 @@ elseif(isset($_POST['submitDeliverInfo'])){
    $pastDeliveryInfo
    = ($_POST['pastFarmDeliveriesInfo']);
 
+   $farmId
+   = ($_POST[' farmIdHidden']);
+
    $combinedDeliveries = $pastDeliveryInfo."<br> <br>".$deliveriesInfo;
 
   $db = $client->farm;
@@ -87,7 +90,7 @@ elseif(isset($_POST['submitDeliverInfo'])){
       array('$set'=>array("farmDeliveries"=>$combinedDeliveries)));
 
      //go to site
-     header("Location: deliver.html");
+     header("Location: deliver.html?id=".$farmId);
      exit;
 }
      
