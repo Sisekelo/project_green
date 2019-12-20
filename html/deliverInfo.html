@@ -77,7 +77,7 @@
 
 				<input type="hidden" name="farmIdName" id="farmIdInfo" value="joe">
 				<input type="hidden" name="pastFarmDeliveriesInfo" id="pastFarmDeliveriesInfo" value="joe">
-				<input type="hidden" name="farmId" id="farmId2" value="joe">
+				<input type="hidden" name="farmIdHidden" id="farmId2">
 
 					<button class="contact100-form-btn" type="submit" name="submitDeliverInfo" id="submitButtonInfo">
 						<span>
@@ -109,8 +109,9 @@
 		document.getElementById("title").innerHTML
 		+= id;
 
-		document.getElementById("farmId2").innerHTML
-		= id;
+		document.getElementById("farmId2").value = id;
+
+		console.log(document.getElementById("farmId2").value);
 
 		document.getElementById("farmNameDelivery").innerHTML
 		= name;

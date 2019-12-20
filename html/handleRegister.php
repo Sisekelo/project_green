@@ -28,7 +28,7 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
      
      $collection->insertOne($document);
 
-     $message = "Farm ID: ".$farmId.". PLEASE WRTIE DOWN THIS ID";
+     $message = "Farm registered. Farm ID: ".$farmId.".";
 
      $url = "deliver.html?id=".$farmId;
 
@@ -77,20 +77,18 @@ elseif(isset($_POST['submitDeliverInfo'])){
    = ($_POST['pastFarmDeliveriesInfo']);
 
    $farmId
-   = ($_POST[' farmIdHidden']);
+   = ($_POST['farmIdHidden']);
 
-   $combinedDeliveries = $pastDeliveryInfo."<br> <br>".$deliveriesInfo;
+  $combinedDeliveries = $pastDeliveryInfo."<br> <br>".$deliveriesInfo;
 
   $db = $client->farm;
   $collection = $db->$deliveriesInfoId;
-
-  
 
   $collection->updateOne(array("farmDeliveries"=>$pastDeliveryInfo), 
       array('$set'=>array("farmDeliveries"=>$combinedDeliveries)));
 
      //go to site
-     header("Location: deliver.html?id=".$farmId);
+    header("Location: deliver.html?id=".$farmId);
      exit;
 }
      
