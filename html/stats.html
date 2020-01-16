@@ -44,8 +44,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link label" href="#">Statistics</a>
-                </li>
+                    <form class="form-inline my-2 my-lg-0" action="handleRegister.php" method="POST">
+                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" name="navStatistics"> <a>Statistics</a></button>
+                    </form>
+                  </li>
 
             </ul>
             <form class="form-inline my-2 my-lg-0" action="handleRegister.php" method="POST">
@@ -137,7 +139,11 @@
                             beginAtZero: true
                         }
                     }]
-                }
+                },
+            title: {
+                display: true,
+                text: 'Number of farms in each region'
+            }
             }
         });
 
