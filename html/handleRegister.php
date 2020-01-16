@@ -3,8 +3,9 @@
 require '../vendor/autoload.php';
 
 $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
+$db = $client->farm;
 
-
+//create a farm
  if(isset($_POST['submit'])){
       
     $farmId = "F".rand(1000,9999);
@@ -12,8 +13,7 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
     $farmerNumber = ($_POST['farmerNumber']);
     $farmRegion = ($_POST['farmRegion']);
     $farmNotes = ($_POST['farmNotes']);
-
-    $db = $client->farm;
+     
     $collection = $db->$farmId;
      
      
@@ -35,6 +35,7 @@ $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
       echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";
 }
 
+//search for farm
 elseif(isset($_POST['submitDeliver'])){
 
   $farmId = ($_POST['farmIdDelivery']);
@@ -65,6 +66,7 @@ elseif(isset($_POST['submitDeliver'])){
      exit;
 }
 
+//update a farm
 elseif(isset($_POST['submitDeliverInfo'])){
 
   $deliveriesInfo
@@ -90,6 +92,58 @@ elseif(isset($_POST['submitDeliverInfo'])){
      //go to site
     header("Location: deliver.html?id=".$farmId);
      exit;
+}
+
+//search in the navigation bar
+elseif(isset($_POST['navSearch'])){
+    
+    $inputFarmName = ($_POST['navSearchInput']);
+    
+    $farmIdObjects = $db->listCollections();
+
+    foreach ($farmIdObjects as $farmIdObject) {
+        
+        $farmId = $farmIdObject->getName();
+        
+        $collection = $db->$farmId;
+
+        $cursor = $collection->find();
+        
+        foreach ($cursor as $document) {
+            
+          $farmId = $document["farmId"];
+          $farmName = $document["farmName"];
+          $farmerNumber = $document["farmerNumber"];
+          $farmRegion = $document["farmRegion"];
+          $farmNotes = $document["farmNotes"];
+          $farmerDeliveries = $document['farmDeliveries'];
+            
+            if($inputFarmName == $farmName){
+
+                 $parameters = "name=".$farmName."&farmerNumber=".$farmerNumber."&farmRegion=".$farmRegion."&farmNotes=".$farmNotes."&farmId=".$farmId."&farmDeliveries=".$farmerDeliveries;
+
+                 $url = "deliverInfo.html?".$parameters;
+
+                 //go to site
+
+                 header("Location: ".$url);
+                 exit;
+                
+            }
+
+         };
+       
+        
+        
+    }
+    
+    $message = "The farm name: $inputFarmName, does not seem to exist";
+
+     $url = "register.html";
+
+    echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";
+    
+    
 }
      
 else{
