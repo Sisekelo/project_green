@@ -145,6 +145,34 @@ elseif(isset($_POST['navSearch'])){
     
     
 }
+
+elseif(isset($_POST['navStatistics'])){
+    
+    $jsonString = "farm:{";
+    
+    $farmIdObjects = $db->listCollections();
+    
+    foreach ($farmIdObjects as $farmIdObject) {
+        
+        $farmId = $farmIdObject->getName();
+        
+        $collection = $db->$farmId;
+
+        $cursor = $collection->find();
+        
+        $items[] = iterator_to_array($collection->find());
+    }
+    
+    echo "<script>console.log(".json_encode($items)." );</script>";
+    echo "<script>localStorage.farmInformation = JSON.stringify(".json_encode($items).")</script>";
+    
+    $url = "stats.html";
+
+    echo "<script>document.location='$url'</script>";
+    
+    
+    
+}
      
 else{
     echo "Please go to the previous page";
