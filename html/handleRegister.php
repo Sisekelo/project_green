@@ -179,8 +179,6 @@ elseif (isset($_POST['navStatistics']))
 
 elseif (isset($_FILES['docUploaded']))
 {
-    
-    echo $_FILES['docUploaded']['tmp_name'];
 
     $db = $client->products;
     $collection = $db->foods;
