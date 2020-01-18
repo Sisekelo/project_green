@@ -3,7 +3,7 @@ require '../vendor/autoload.php';
 
 
 include "SimpleXLSX.php";
-require "backgroundProcesses.php";
+//require "backgroundProcesses.php";
 
 $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
 $db = $client->farm;
