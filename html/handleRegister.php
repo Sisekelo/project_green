@@ -102,9 +102,8 @@ elseif (isset($_POST['submitDeliverInfo']))
 //search in the navigation bar
 elseif (isset($_POST['navSearch']))
 {
-    echo 'we got here';
 
-    /*$inputFarmName = ($_POST['navSearchInput']);
+    $inputFarmName = ($_POST['navSearchInput']);
 
     $farmIdObjects = $db->listCollections();
 
@@ -148,7 +147,7 @@ elseif (isset($_POST['navSearch']))
 
     $url = "register.html";
 
-    echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";*/
+    echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";
 
 }
 
@@ -180,8 +179,10 @@ elseif (isset($_POST['navStatistics']))
 
 elseif (isset($_FILES['docUploaded']))
 {
+    
+    echo 'we got here!';
 
-    $db = $client->products;
+    /*$db = $client->products;
     $collection = $db->foods;
 
     $file = $_FILES['docUploaded']['tmp_name'];
@@ -236,7 +237,7 @@ elseif (isset($_FILES['docUploaded']))
 
     $url = "price.html";
 
-    echo "<script>document.location='$url'</script>";
+    echo "<script>document.location='$url'</script>";*/
 }
 
 elseif (isset($_POST['navPrices'])){
