@@ -189,7 +189,7 @@ elseif (isset($_FILES['docUploaded']))
 
     if ($xlsx = SimpleXLSX::parse($file))
     {
-        echo 'we got here';
+        echo 'we got here!';
         $i = 0;
 
         $stringHeader0;
