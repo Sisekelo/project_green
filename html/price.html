@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>Register Farm</title>
+    <title>Upload prices</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -27,6 +27,10 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <link href="https://unpkg.com/tabulator-tables@4.5.3/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.5.3/dist/js/tabulator.min.js"></script>
+
     <!--===============================================================================================-->
 </head>
 
@@ -45,12 +49,6 @@
                         <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" name="navStatistics"> <a>Statistics</a></button>
                     </form>
                   </li>
-                
-                <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0" action="handleRegister.php" method="POST">
-                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" name="navPrices"> <a>Prices</a></button>
-                    </form>
-                  </li>
 
             </ul>
             <form class="form-inline my-2 my-lg-0" action="handleRegister.php" method="POST">
@@ -62,52 +60,72 @@
 
 
     <div class="container-contact100">
-        <div class="wrap-contact100">
-            <form class="contact100-form validate-form" action="handleRegister.php" method="POST">
-                <span class="contact100-form-title">
-                    Register farm
-                </span>
 
-                <div class="wrap-input100 validate-input bg1" data-validate="Please enter the farm name">
-                    <span class="label-input100">FARM NAME *</span>
-                    <input class="input100" type="text" name="farmName" placeholder="enter the farm name">
-                </div>
-
-                <div class="wrap-input100 bg1 rs1-wrap-input100">
-                    <span class="label-input100">Phone</span>
-                    <input class="input100" type="text" name="farmerNumber" placeholder="enter farmer cellphone number">
-                </div>
-
-                <div class="rs1-wrap-input100 input100-select">
-                    <span class="label-input100">Region *</span>
-                    <div>
-                        <select class="js-select2" name="farmRegion" required>
-                            <option>Select Region</option>
-                            <option>Hhohho</option>
-                            <option>Manzini</option>
-                            <option>Shiselweni</option>
-                            <option>Lubombo</option>
-                        </select>
-                        <div class="dropDownSelect2"></div>
-                    </div>
-                </div>
-
-                <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate="Please Type Your Notes">
-                    <span class="label-input100">Notes</span>
-                    <textarea class="input100" name="farmNotes" placeholder="Insert notes about farm"></textarea>
-                </div>
-
-                <div class="container-contact100-form-btn">
-                    <button class="contact100-form-btn" type="submit" name="submit">
-                        <span>
-                            Submit
-                            <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-                        </span>
-                    </button>
-                </div>
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+            <form class="form-inline my-2 my-lg-0" action="handleRegister.php" method="POST" enctype="multipart/form-data">
+                <span class="label-input100">Upload latest prices</span>
+                <input class="input100" type="file" name="docUploaded">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Upload</button>
             </form>
         </div>
+
+        <div class="wrap-contact100">
+            <div id="example-table"></div>
+        </div>
     </div>
+    
+    
+    <script>
+        //create Tabulator on DOM element with id "example-table"
+        var table = new Tabulator("#example-table", {
+            height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+            layout:"fitColumns", //fit columns to width of table (optional)
+            columns:[ //Define Table Columns
+                {title:"Item", field:"item"},
+                {title:"Unit", field:"unit"},
+                {title:"L/M", field:"lm", align:"center"},
+                {title:"SMALL", field:"small", align:"center"},
+            ],
+            rowClick:function(e, row){ //trigger an alert message when the row is clicked
+                alert("Row " + row.getData().item + " Clicked!!!!");
+            },
+        });
+        
+        var tabledata = [];
+        
+        var data = JSON.parse(localStorage.productInformation)[0];
+        
+        
+        for(i=0 ; i < data.length; i++){
+            
+             var jsonObject = {
+                item: data[i].item,
+                unit: data[i].unit,
+                lm: data[i].lm,
+                small: data[i].small,
+            };
+            
+            
+            tabledata.push(jsonObject);
+        };
+        
+        console.log(tabledata);
+        console.log(data[3]);
+        
+        /*//define some sample data
+        var tabledata = [
+            {id:1, name:"Oli Bob", age:"12", col:"red", dob:""},
+            {id:2, name:"Mary May", age:"1", col:"blue", dob:"14/05/1982"},
+            {id:3, name:"Christine Lobowski", age:"42", col:"green", dob:"22/05/1982"},
+            {id:4, name:"Brendon Philips", age:"125", col:"orange", dob:"01/08/1980"},
+            {id:5, name:"Margret Marmajuke", age:"16", col:"yellow", dob:"31/01/1999"},
+        ];*/
+
+        //load sample data into the table
+        table.setData(tabledata);
+    
+    </script>
+
 
 
 
