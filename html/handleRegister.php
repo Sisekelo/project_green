@@ -182,13 +182,14 @@ elseif (isset($_FILES['docUploaded']))
     
     echo $_FILES['docUploaded']['tmp_name'];
 
-    /*$db = $client->products;
+    $db = $client->products;
     $collection = $db->foods;
 
     $file = $_FILES['docUploaded']['tmp_name'];
 
     if ($xlsx = SimpleXLSX::parse($file))
     {
+        echo 'we got here';
         $i = 0;
 
         $stringHeader0;
@@ -208,6 +209,9 @@ elseif (isset($_FILES['docUploaded']))
                 }
 
                 $stringHeader0 = $elt[0];
+                
+                echo $stringHeader0;
+                
                 $stringHeader1 = $elt[1];
                 $stringHeader2 = $elt[2];
                 $stringHeader3 = $elt[3];
@@ -237,7 +241,7 @@ elseif (isset($_FILES['docUploaded']))
 
     $url = "price.html";
 
-    echo "<script>document.location='$url'</script>";*/
+    echo "<script>document.location='$url'</script>";
 }
 
 elseif (isset($_POST['navPrices'])){
