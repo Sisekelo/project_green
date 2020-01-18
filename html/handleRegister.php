@@ -102,8 +102,9 @@ elseif (isset($_POST['submitDeliverInfo']))
 //search in the navigation bar
 elseif (isset($_POST['navSearch']))
 {
+    echo 'we got here';
 
-    $inputFarmName = ($_POST['navSearchInput']);
+    /*$inputFarmName = ($_POST['navSearchInput']);
 
     $farmIdObjects = $db->listCollections();
 
@@ -147,7 +148,7 @@ elseif (isset($_POST['navSearch']))
 
     $url = "register.html";
 
-    echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";
+    echo "<script type='text/javascript'>alert('$message');document.location='$url'</script>";*/
 
 }
 
