@@ -236,6 +236,10 @@ elseif (isset($_FILES['docUploaded']))
     {
         echo SimpleXLSX::parseError();
     }
+    
+   $foodItems[] = iterator_to_array($collection->find());
+
+    echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
 
     $url = "price.html";
 
@@ -243,6 +247,13 @@ elseif (isset($_FILES['docUploaded']))
 }
 
 elseif (isset($_POST['navPrices'])){
+    
+    $db = $client->products;
+    $collection = $db->foods;
+    
+    $foodItems[] = iterator_to_array($collection->find());
+
+    echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
     
     $url = "price.html";
 
