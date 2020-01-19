@@ -27,7 +27,6 @@ $collection2 = $db2->foods;
 $foodItems[] = iterator_to_array($collection2->find());
 
 echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
-exit;   
 
 
 ?>

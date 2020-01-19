@@ -32,6 +32,8 @@ if (isset($_POST['submit']))
     $collection->insertOne($document);
 
     $message = "Farm registered. Farm ID: " . $farmId . ".";
+    
+    runBackgroundProcesses();
 
     $url = "deliver.html?id=" . $farmId;
 
@@ -59,6 +61,8 @@ elseif (isset($_POST['submitDeliver']))
         $farmerDeliveries = $document['farmDeliveries'];
 
     };
+    
+    runBackgroundProcesses();
 
     $parameters = "name=" . $farmName . "&farmerNumber=" . $farmerNumber . "&farmRegion=" . $farmRegion . "&farmNotes=" . $farmNotes . "&farmId=" . $farmId . "&farmDeliveries=" . $farmerDeliveries;
 
@@ -93,6 +97,8 @@ elseif (isset($_POST['submitDeliverInfo']))
             "farmDeliveries" => $combinedDeliveries
         )
     ));
+    
+    runBackgroundProcesses();
 
     //go to site
     header("Location: deliver.html?id=" . $farmId);
@@ -128,6 +134,7 @@ elseif (isset($_POST['navSearch']))
 
             if ($inputFarmName == $farmName)
             {
+                runBackgroundProcesses();
 
                 $parameters = "name=" . $farmName . "&farmerNumber=" . $farmerNumber . "&farmRegion=" . $farmRegion . "&farmNotes=" . $farmNotes . "&farmId=" . $farmId . "&farmDeliveries=" . $farmerDeliveries;
 
@@ -142,6 +149,8 @@ elseif (isset($_POST['navSearch']))
         };
 
     }
+    
+    runBackgroundProcesses();
 
     $message = "The farm name: $inputFarmName, does not seem to exist";
 
@@ -167,9 +176,8 @@ elseif (isset($_POST['navStatistics']))
 
         $items[] = iterator_to_array($collection->find());
     }
-
-    echo "<script>console.log(" . json_encode($items) . " );</script>";
-    echo "<script>localStorage.farmInformation = JSON.stringify(" . json_encode($items) . ")</script>";
+    
+    runBackgroundProcesses();
 
     $url = "stats.html";
 
@@ -187,7 +195,8 @@ elseif (isset($_FILES['docUploaded']))
 
     if ($xlsx = SimpleXLSX::parse($file))
     {
-        echo 'we got here!';
+        
+        $collection->drop();
         $i = 0;
 
         $stringHeader0;
@@ -237,9 +246,7 @@ elseif (isset($_FILES['docUploaded']))
         echo SimpleXLSX::parseError();
     }
     
-   $foodItems[] = iterator_to_array($collection->find());
-
-    echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
+   runBackgroundProcesses();
 
     $url = "price.html";
 
@@ -248,12 +255,7 @@ elseif (isset($_FILES['docUploaded']))
 
 elseif (isset($_POST['navPrices'])){
     
-    $db = $client->products;
-    $collection = $db->foods;
-    
-    $foodItems[] = iterator_to_array($collection->find());
-
-    echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
+    runBackgroundProcesses();
     
     $url = "price.html";
 
@@ -264,4 +266,36 @@ else
 {
     echo "Please go to the previous page";
 }
+
+function runBackgroundProcesses() {
+    $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
+    $db = $client->farm;
+    
+    //farm information only
+    $db = $client->farm;
+    $farmIdObjects = $db->listCollections();
+
+        foreach ($farmIdObjects as $farmIdObject)
+        {
+
+            $farmId = $farmIdObject->getName();
+
+            $collection = $db->$farmId;
+
+            $cursor = $collection->find();
+
+            $items[] = iterator_to_array($collection->find());
+        }
+
+        echo "<script>localStorage.farmInformation = JSON.stringify(" . json_encode($items) . ")</script>";
+
+    //product information
+    $db2 = $client->products;
+    $collection2 = $db2->foods;
+
+    $foodItems[] = iterator_to_array($collection2->find());
+
+    echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
+}
+
 ?>
