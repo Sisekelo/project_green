@@ -5,6 +5,11 @@ require '../vendor/autoload.php';
 include "SimpleXLSX.php";
 //require "backgroundProcesses.php";
 
+// Using ob_start() to workaround premature headers being sent
+// error_reporting(E_ALL);
+// ini_set("display_errors", 1);
+ob_start();
+
 $client = new MongoDB\Client("mongodb://127.0.0.1:27017");
 $db = $client->farm;
 
@@ -297,5 +302,7 @@ function runBackgroundProcesses() {
 
     echo "<script>localStorage.productInformation = JSON.stringify(" . json_encode($foodItems) . ")</script>";
 }
+
+ob_end_flush();
 
 ?>
